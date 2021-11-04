@@ -1,0 +1,24 @@
+{
+  "name": "nr-metrics-forwarder",
+  "version": "1.0.0",
+  "description": "### Install Using Azure Portal [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhectorgomezv%2Fnr-metrics-forwarder%2Fmaster%2Farm%2Fazuredeploy-eventhubforwarder.json)",
+  "scripts": {
+    "package": "zip -r EventHubForwarder.zip EventHubForwarder/* host.json package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hectorgomezv/nr-metrics-forwarder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hectorgomezv/nr-metrics-forwarder/issues"
+  },
+  "homepage": "https://github.com/hectorgomezv/nr-metrics-forwarder#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2"
+  }
+}
