@@ -12,14 +12,14 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Event Hub Namespace where all logs to be forwarded to New Relic are being sent to. Leave this blank for a new namespace to be created automatically (its name will start with 'nrlogs-')."
+                "description": "Event Hub Namespace where all logs and metrics to be forwarded to New Relic are being sent to. Leave this blank for a new namespace to be created automatically (its name will start with 'nrdata-')."
             }
         },
         "eventHubName": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Event Hub where all the Azure Platform logs are being sent to in order to be forwarded to New Relic. Leave this blank for a new Event Hub to be created automatically (its name will be 'nrlogs')."
+                "description": "Event Hub where all the Azure Platform logs and metrics are being sent to in order to be forwarded to New Relic. Leave this blank for a new Event Hub to be created automatically (its name will be 'nrdata')."
             }
         },
         "location": {
@@ -29,7 +29,7 @@
                 "description": "Region where all resources included in this template will be deployed. Leave this blank to use the same region as the one of the resource group."
             }
         },
-        "newRelicEndpoint": {
+        "newRelicLogsEndpoint": {
             "type": "string",
             "defaultValue": "https://log-api.newrelic.com/log/v1",
             "metadata": {
@@ -120,17 +120,17 @@
         "location": "[if(equals(parameters('location'), ''), resourceGroup().location, parameters('location'))]",
         "onePerResourceGroupUniqueSuffix": "[uniqueString(resourceGroup().id)]",
         "createNewEventHubNamespace": "[equals(parameters('eventHubNamespace'), '')]",
-        "eventHubNamespaceName": "[if(variables('createNewEventHubNamespace'), concat('nrlogs-eventhub-namespace-', variables('onePerResourceGroupUniqueSuffix')), parameters('eventHubNamespace'))]",
+        "eventHubNamespaceName": "[if(variables('createNewEventHubNamespace'), concat('nrdata-eventhub-namespace-', variables('onePerResourceGroupUniqueSuffix')), parameters('eventHubNamespace'))]",
         "createNewEventHub": "[equals(parameters('eventHubName'), '')]",
-        "eventHubName": "[if(variables('createNewEventHub'), 'nrlogs-eventhub', parameters('eventHubName'))]",
-        "eventHubConsumerGroupName": "nrlogs-consumergroup",
-        "logConsumerAuthorizationRuleName": "nrlogs-consumer-policy",
-        "logProducerAuthorizationRuleName": "nrlogs-producer-policy",
-        "storageAccountName": "[concat('nrlogs', variables('onePerResourceGroupUniqueSuffix'))]",
-        "servicePlanName": "[concat('nrlogs-serviceplan-', variables('onePerResourceGroupUniqueSuffix'))]",
+        "eventHubName": "[if(variables('createNewEventHub'), 'nrdata-eventhub', parameters('eventHubName'))]",
+        "eventHubConsumerGroupName": "nrdata-consumergroup",
+        "logConsumerAuthorizationRuleName": "nrdata-consumer-policy",
+        "logProducerAuthorizationRuleName": "nrdata-producer-policy",
+        "storageAccountName": "[concat('nrdata', variables('onePerResourceGroupUniqueSuffix'))]",
+        "servicePlanName": "[concat('nrdata-serviceplan-', variables('onePerResourceGroupUniqueSuffix'))]",
         "onePerResourceGroupAndEventHubUniqueSuffix": "[uniqueString(resourceGroup().id, variables('eventHubNamespaceName'), variables('eventHubName'))]",
-        "functionAppName": "[concat('nrlogs-eventhubforwarder-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
-        "activityLogsDiagnosticSettingName": "[concat('nrlogs-activity-log-diagnostic-setting-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
+        "functionAppName": "[concat('nrdata-eventhubforwarder-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
+        "activityLogsDiagnosticSettingName": "[concat('nrdata-activity-log-diagnostic-setting-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
         "createActivityLogsDiagnosticSetting": "[or(parameters('forwardAdministrativeAzureActivityLogs'), parameters('forwardAlertAzureActivityLogs'), parameters('forwardAutoscaleAzureActivityLogs'), parameters('forwardPolicyAzureActivityLogs'), parameters('forwardRecommendationAzureActivityLogs'), parameters('forwardResourceHealthAzureActivityLogs'), parameters('forwardSecurityAzureActivityLogs'), parameters('forwardServiceHealthAzureActivityLogs'))]",
         "eventHubForwarderFunctionArtifact": "https://github.com/newrelic/newrelic-azure-functions/releases/latest/download/EventHubForwarder.zip"
     },
@@ -259,8 +259,8 @@
                             "value": "[parameters('newRelicLicenseKey')]"
                         },
                         {
-                            "name": "NR_ENDPOINT",
-                            "value": "[parameters('newRelicEndpoint')]"
+                            "name": "NR_LOGS_ENDPOINT",
+                            "value": "[parameters('newRelicLogsEndpoint')]"
                         },
                         {
                             "name": "NR_TAGS",
