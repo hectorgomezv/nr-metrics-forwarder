@@ -1,8 +1,15 @@
-const process = messages => ({
-  length: messages.length,
-  isMetrics: messages.map(m => m.metricName),
+const isMetricsEvent = e => (Array.isArray(e.records) && e.records.some(r => r.metricName));
+
+const parseMetrics = ({ metricName, resourceId, time }) => ({
+  metricName,
+  resourceId,
+  time,
 });
 
+const extractMetrics = events => events
+  .filter(e => isMetricsEvent(e))
+  .map(e => parseMetrics(e));
+
 module.exports = {
-  process,
+  extractMetrics,
 };

@@ -25,8 +25,6 @@ const NR_MAX_PAYLOAD_SIZE = 1000 * 1024;
 const NR_MAX_RETRIES = process.env.NR_MAX_RETRIES || 3;
 const NR_RETRY_INTERVAL = process.env.NR_RETRY_INTERVAL || 2000; // default: 2 seconds
 
-const areMetricsMessages = (messages) => true;
-
 module.exports = async function main(context, eventHubMessages) {
   if (!NR_LICENSE_KEY && !NR_INSERT_KEY) {
     context.log.error(
@@ -36,11 +34,7 @@ module.exports = async function main(context, eventHubMessages) {
     return;
   }
 
-  if (areMetricsMessages(eventHubMessages)) {
-    context.log(MetricsProcessor.process(eventHubMessages));
-
-    return;
-  }
+  context.log(MetricsProcessor.extractMetrics(eventHubMessages));
 
   let buffer = transformData(eventHubMessages, context);
   if (buffer.length === 0) {

@@ -4,10 +4,10 @@
       "type": "eventHubTrigger",
       "name": "eventHubMessages",
       "direction": "in",
-      "eventHubName": "%EVENTHUB_NAME%",
+      "eventHubName": "nrdata-eventhub",
       "connection": "EVENTHUB_CONSUMER_CONNECTION",
       "cardinality": "many",
-      "consumerGroup": "%EVENTHUB_CONSUMER_GROUP%"
+      "consumerGroup": "nrdata-consumergroup"
     }
   ]
 }
