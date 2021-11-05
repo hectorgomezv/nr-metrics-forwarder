@@ -132,7 +132,7 @@
         "functionAppName": "[concat('nrdata-eventhubforwarder-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
         "activityLogsDiagnosticSettingName": "[concat('nrdata-activity-log-diagnostic-setting-', variables('onePerResourceGroupAndEventHubUniqueSuffix'))]",
         "createActivityLogsDiagnosticSetting": "[or(parameters('forwardAdministrativeAzureActivityLogs'), parameters('forwardAlertAzureActivityLogs'), parameters('forwardAutoscaleAzureActivityLogs'), parameters('forwardPolicyAzureActivityLogs'), parameters('forwardRecommendationAzureActivityLogs'), parameters('forwardResourceHealthAzureActivityLogs'), parameters('forwardSecurityAzureActivityLogs'), parameters('forwardServiceHealthAzureActivityLogs'))]",
-        "eventHubForwarderFunctionArtifact": "https://github.com/hectorgomezv/nr-metrics-forwarder/archive/refs/tags/0.1.zip"
+        "eventHubForwarderFunctionArtifact": "https://github.com/hectorgomezv/nr-metrics-forwarder/releases/download/0.1.2/EventHubForwarder.zip"
     },
     "resources": [
         {

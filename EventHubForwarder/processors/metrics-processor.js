@@ -1,5 +1,5 @@
-const process = async (messages) => messages.length;
+const process = messages => messages.length;
 
 module.exports = {
-    process,
-}
+  process,
+};
