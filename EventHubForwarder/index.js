@@ -36,33 +36,33 @@ module.exports = async function main(context, eventHubMessages) {
 
   context.log(MetricsProcessor.extractMetrics(eventHubMessages));
 
-  let buffer = transformData(eventHubMessages, context);
-  if (buffer.length === 0) {
-    context.log.warn('logs format is invalid');
-    return;
-  }
-  let compressedPayload;
-  let payloads = generatePayloads(buffer, context);
-  for (const payload of payloads) {
-    try {
-      compressedPayload = await compressData(JSON.stringify(payload));
-      try {
-        await retryMax(httpSend, NR_MAX_RETRIES, NR_RETRY_INTERVAL, [
-          compressedPayload,
-          context,
-        ]);
-        context.log('Logs payload successfully sent to New Relic');
-      } catch (e) {
-        context.log.error(
-          'Max retries reached: failed to send logs payload to New Relic'
-        );
-        context.log.error('Exception: ', JSON.stringify(e));
-      }
-    } catch (e) {
-      context.log.error('Error during payload compression');
-      context.log.error('Exception: ', JSON.stringify(e));
-    }
-  }
+  // let buffer = transformData(eventHubMessages, context);
+  // if (buffer.length === 0) {
+  //   context.log.warn('logs format is invalid');
+  //   return;
+  // }
+  // let compressedPayload;
+  // let payloads = generatePayloads(buffer, context);
+  // for (const payload of payloads) {
+  //   try {
+  //     compressedPayload = await compressData(JSON.stringify(payload));
+  //     try {
+  //       await retryMax(httpSend, NR_MAX_RETRIES, NR_RETRY_INTERVAL, [
+  //         compressedPayload,
+  //         context,
+  //       ]);
+  //       context.log('Logs payload successfully sent to New Relic');
+  //     } catch (e) {
+  //       context.log.error(
+  //         'Max retries reached: failed to send logs payload to New Relic'
+  //       );
+  //       context.log.error('Exception: ', JSON.stringify(e));
+  //     }
+  //   } catch (e) {
+  //     context.log.error('Error during payload compression');
+  //     context.log.error('Exception: ', JSON.stringify(e));
+  //   }
+  // }
 };
 
 function compressData(data) {
