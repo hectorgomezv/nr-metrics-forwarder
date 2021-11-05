@@ -11,6 +11,6 @@ module.exports = {
     ecmaVersion: 2019,
   },
   rules: {
-    'arrow-parens': ['as-needed'],
+    'arrow-parens': [2, 'as-needed'],
   },
 };

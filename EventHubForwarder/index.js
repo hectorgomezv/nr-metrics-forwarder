@@ -37,7 +37,9 @@ module.exports = async function main(context, eventHubMessages) {
   }
 
   if (areMetricsMessages(eventHubMessages)) {
-    return context.log(MetricsProcessor.process(eventHubMessages));
+    context.log(MetricsProcessor.process(eventHubMessages));
+
+    return;
   }
 
   let buffer = transformData(eventHubMessages, context);
